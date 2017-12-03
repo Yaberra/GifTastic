@@ -1,19 +1,22 @@
 $( document ).ready(function() {
     // console.log( "test!" );
 
- 	// Initial array of movies
-      var afv = ["afvbabies", "afvpets", "afv"];
-      console.log(afv);
+        // Initial Array of Butttons 
+    // _____________________________________________________________________________________________________________________________
 
-     // Function for displaying movie data
+          var afv = ["afvbabies", "afvpets", "afv"];
+          console.log(afv);
 
-      function renderButtons() {
+        // Function for displaying movie data
+
+          function renderButtons() {
 
         // Deleting the movie buttons prior to adding new movie buttons
-        $("#search-view").empty();
+
+         $("#search-view").empty();
 
         // Looping through the array of afv 
-        for (var i = 0; i <afv.length; i++) {
+         for (var i = 0; i <afv.length; i++) {
 
         // Then dynamicaly generating buttons for each afv in the array.
 
@@ -30,71 +33,52 @@ $( document ).ready(function() {
         }
       }
 
-          // listen to on click for the submit buttion 
-        $("#submit-button").on("click", function(e){
-          // event.preventDefault() prevents the form from trying to submit itself.
-          event.preventDefault();
-          // create a variable to hold all the afv searched
-          var afv = $("#Input-afv-search").val().trim();
-          // console.log(afv)
-          // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
-          var a = $("<button>");
-          // Adding a class
-          a.addClass("afv");
-           // Adding a data-attribute with a value of afv at index i
-          a.attr("data-name", afv);
-          // Providing the button's text with a value of the places at index i
-          a.text(afv);
-          // Adding the new button to the Html
-          $("#addFood").append(a);
+      // GIPHY Ajax API Query and data pull 
+      // ____________________________________________________________________________________________________________________________
+  	                    
+            var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + afv + "&api_key=chJF2E6dEc4mlE405FcAlzVVkQHncAAG&limit=10";
 
-      })
+            $.ajax({
+            url: queryURL,
+            method: "GET"
+            }).done(function(response) {
 
-     	                    
-              var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + afv + "&api_key=chJF2E6dEc4mlE405FcAlzVVkQHncAAG&limit=10";
-
-              $.ajax({
-               url: queryURL,
-              method: "GET"
-              }).done(function(response) {
+            //  write a For loop that replaces [0] with [i] and grabs the url
           
-          console.log(response);
+            for(i=0; i<response.data.length;i++){
 
-              for(i=0; i<response.data.length;i++){
-
-          //Creating and storing a div tag
+            //Creating and storing a div tag
           
              var searchDiv =$('<div>');
 
              var rating = response.data[i].rating; 
 
-          // Creating a paragraph tag with the result item's rating
+            // Creating a paragraph tag with the result item's rating
           
              var p =$("<p>").text("Rating: "+ response.data[i].rating);
-          // console.log(rating);
+            
+            // console.log(rating);
 
-          // creating and storing an image tag
+            //  create a new DOM element for image
 
               var afv = $('<img>'); 
 
             // Setting the src attribute of the image to a property pulled off the result item
-            // When the user clicks on a still GIPHY images, the gif should animate. 
-            // If the user clicks the gif again, it should stop playing.
-            // Immage variable holds both animated and still image
-            // Setting the src attribute of the image to a property pulled off the result item
-
-                afv.attr('src', response.data[i].images.original_still.url);
+            // Image variable holds both animated and still image
             
-                // foodImage.attr('src', response.data[i].images.original_mp4.mp4); 
 
+              afv.attr('src', response.data[i].images.original_still.url);
+          
+            // afv.attr('src',response.data[i].images.original_mp4.mp4);          
+              
             // Appending the paragraph and image tag to the searchDiv
-//           
+          
                 searchDiv.append(p);
             
                 searchDiv.append(afv);
-//             
+            
             // Prependng the searchDiv to the HTML page in the "search-view" div
-//              
+              
                 $("#search-view").prepend(searchDiv);
          
 
@@ -103,36 +87,80 @@ $( document ).ready(function() {
                 })
 
 
-            // This function handles events where one button is clicked
+            // Take the value from a user input box and adds it to the topics array. 
+          
+            // _____________________________________________________________________________________________________________________
+          
 
-                $("#addAfv").on("click", ".afv", function(event) {
+            // listen to on click for the submit buttion 
+
+               $("#submit-button").on("click", function(e){
+          
+            // event.preventDefault() prevents the form from trying to submit itself.
+            
+              event.preventDefault();
+          
+            // create a variable to hold all the afv searched
+              
+              var afvSearched = $("#Input-afv-search").val().trim();
+            // console.log(afv)
+
+            // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
+            
+              var a = $("<button>");
+
+            // Adding a class
+            
+              a.addClass("afvSearched");
+
+            // Adding a data-attribute with a value of afv at index i
+
+              a.attr("data-name", afvSearched);
+          
+            // Providing the button's text with a value of the places at index i
+            
+              a.text(afvSearched);
+          
+            // Adding the new button to the Html
+          
+            $("#addafv").append(a);
+
+          })
+
+            //Then make a function call that takes each topic in the array remakes the buttons on the page
+
+              $("#addAfv").on("click", ".afv", function(event) {
 
             // event.preventDefault() prevents the form from trying to submit itself.
-             // We're using a form so that the user can hit enter instead of clicking the button if they want
 
-                 event.preventDefault();
+              event.preventDefault();
 
-             console.log("You clicked a afv button")
+          // This line will grab the text from the input box
 
-             // This line will grab the text from the input box
+              var afvSearched = $(this).attr("data-name");
 
-                var afv = $(this).attr("data-name");
 
-            // console.log(afv)
-            
-            // The selected food from the textbox is then added to our array
+          // The selected afv food from the textbox is then added to our array
+
+
+          // calling renderButtons which handles the processing of our movie array
+          
+              renderButtons();
+              
+            });
+
+          // Calling the renderButtons function at least once to display the initial list of movies
+                
+          renderButtons();
       
             
-              });
+          });
 
-            // Calling the renderButtons function at least once to display the initial list of movies
-      
-            renderButtons();
+        // ______________________________________________________________________________________________________________________________
 
-           // queryURL for GIPHY API data pull 
-
-     
-             }); 
+        // When the user clicks one of the still GIPHY images, the gif should animate. 
+        // If the user clicks the gif again, it should stop playing.
+             
 
 
   
@@ -143,16 +171,6 @@ $( document ).ready(function() {
         
 
  
-      //  write a For loop that replaces [0] with [i] and grabs the url
-
-      //  create a new DOM element for image
-
-      //  add the response URL attribute to the image
-
-      //  append the image to the div
-    
-
-	   //  QueryURL for Giphy API
 
 
 
