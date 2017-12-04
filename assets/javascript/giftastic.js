@@ -42,6 +42,7 @@ $( document ).ready(function() {
             url: queryURL,
             method: "GET"
             }).done(function(response) {
+              console.log(response);
 
             //  write a For loop that replaces [0] with [i] and grabs the url
           
@@ -66,11 +67,9 @@ $( document ).ready(function() {
             // Setting the src attribute of the image to a property pulled off the result item
             // Image variable holds both animated and still image
             
-
-              afv.attr('src', response.data[i].images.original_still.url);
-          
-            // afv.attr('src',response.data[i].images.original_mp4.mp4);          
-              
+              afv.attr('src', response.data[i].images.downsized_still.url);
+              afv.attr('src', response.data[i].images.downsized.url);
+             
             // Appending the paragraph and image tag to the searchDiv
           
                 searchDiv.append(p);
@@ -160,6 +159,15 @@ $( document ).ready(function() {
 
         // When the user clicks one of the still GIPHY images, the gif should animate. 
         // If the user clicks the gif again, it should stop playing.
+
+        // $("#search-view").hover(function(){
+          
+          // $(this).html('downsized_still') ;
+          // } function(){
+           // $(this).html('downsized_still' , 'downsized')
+          // }
+
+           // )}
              
 
 
