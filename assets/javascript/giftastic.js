@@ -35,7 +35,7 @@ $( document ).ready(function() {
 
       // GIPHY Ajax API Query and data pull 
       // ____________________________________________________________________________________________________________________________
-  	                    
+                        
             var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + afv + "&api_key=chJF2E6dEc4mlE405FcAlzVVkQHncAAG&limit=10";
 
             $.ajax({
@@ -93,7 +93,7 @@ $( document ).ready(function() {
 
             // listen to on click for the submit buttion 
 
-               $("#submit-button").on("click", function(e){
+               $("#submit-button").on("click", function(event){
           
             // event.preventDefault() prevents the form from trying to submit itself.
             
@@ -101,11 +101,9 @@ $( document ).ready(function() {
           
             // create a variable to hold all the afv searched
               
-              var afvSearched = $("#Input-afv-search").val().trim();
+              var afvSearched = $("#Input-Afv-search").val().trim();
             // console.log(afv)
-
-            // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
-            
+                     
               var a = $("<button>");
 
             // Adding a class
@@ -122,7 +120,7 @@ $( document ).ready(function() {
           
             // Adding the new button to the Html
           
-            $("#addafv").append(a);
+            $("#addAfv").append(a);
 
           })
 
@@ -139,8 +137,9 @@ $( document ).ready(function() {
               var afvSearched = $(this).attr("data-name");
 
 
-          // The selected afv food from the textbox is then added to our array
+          // The selected afv movie from the textbox is then added to our array
 
+             afvSearched.push(afv);
 
           // calling renderButtons which handles the processing of our movie array
           
@@ -160,15 +159,7 @@ $( document ).ready(function() {
         // When the user clicks one of the still GIPHY images, the gif should animate. 
         // If the user clicks the gif again, it should stop playing.
 
-        // $("#search-view").hover(function(){
-          
-          // $(this).html('downsized_still') ;
-          // } function(){
-           // $(this).html('downsized_still' , 'downsized')
-          // }
-
-           // )}
-             
+      
 
 
   
@@ -179,9 +170,4 @@ $( document ).ready(function() {
         
 
  
-
-
-
-
-
 

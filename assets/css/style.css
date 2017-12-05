@@ -1,7 +1,9 @@
-#addFood {
+.afv {
 
 font-family:'Shadows Into Light Two', cursive;
 font-style: color:rgb(201,78,97);
+width:100px;
+background-color: rgb(105,105,105);
 
 
 }
@@ -9,6 +11,7 @@ font-style: color:rgb(201,78,97);
 h1 {
 
 	font-family:'Shadows Into Light Two', cursive;
+	color:rgb(255,255,255);
 
 }
 
